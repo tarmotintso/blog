@@ -21,18 +21,14 @@ if(!empty($posts)) foreach ($posts as $post ): ?>
 
 
 
-<?php
-$_tags = get_all("SELECT * FROM post_tags NATURAL JOIN tag");
-foreach ($_tags as $tag) {
-    $this->tags[$tag['post_id']][] = $tag['$tag_name'];
-}
-?>
+
 
 <?php
 if (!empty($tags))foreach ($tags[$post['post_id']] as $tag):?>
-    <a href="#"<span class="label" style="background-color: #5bc0de"><?=$tag?></span></a>
+    <a href="<?=BASE_URL?>tags/view/<?=$tag['tag_name']?>"><span class = "label" style="background-color: #5bc0de"><?=$tag?></span></a>
 
 <? endforeach?>
+
 
 
 
