@@ -9,7 +9,7 @@ if(!empty($posts)) foreach ($posts as $post ): ?>
         <span class="badge badge-success">Posted <?=$post["post_created"]?> by <?=$post["username"]?>
         </span><div class="pull-right"><span class="label">By <?=$post['post_id']?></span><?php
             if (!empty($tags))foreach ($tags[$post['post_id']] as $tag):?>
-                <a href="#"<span class="label" style="background-color: #5bc0de"><?=$tag?></span></a>
+                <a href="<?=BASE_URL?>tags/view/<?=$tag?>"<span class="label" style="background-color: #5bc0de"><?=$tag?></span></a>
 
 <? endforeach?>
         </div>
