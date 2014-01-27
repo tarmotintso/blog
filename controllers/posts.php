@@ -3,7 +3,7 @@
 class posts extends Controller{
 
 	function index(){
-		$this->posts = get_all("SELECT * FROM post");
+		$this->posts = get_all("SELECT * FROM post NATURAL JOIN user");
 	}
 
     function index_ajax(){
