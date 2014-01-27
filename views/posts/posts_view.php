@@ -7,6 +7,8 @@
 
     </div>
 
+    <?foreach ($tags as $tag):?><a href="#"><span class="label-info"><?=$tag['tag_name']?></span></a><?endforeach?>
+
 
 
 
