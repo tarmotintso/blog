@@ -9,9 +9,11 @@
                     <span class="badge badge-success">Posted <?=$post["post_created"]?></span>
                     <span class="badge badge-success">By <?=$post["username"]?></span>
                     <div class="pull-right">
-                        <?if(!empty($users)) foreach ($users [$post ['post_id']] as $user):?>
+                        <?if(!empty($users)) foreach ($users[$post['post_id']] as $user):?>
                             <a href="#"><span class = "label" style="background-color: #5bc0de"><?=$user?></span></a>
                         <?endforeach?>
+
+
                     </div>
                 </div>
                 <hr>

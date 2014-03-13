@@ -9,7 +9,7 @@
                     <span class="badge badge-success">Posted <?=$post["post_created"]?></span>
                     <span class="badge badge-success">By <?=$post["username"]?></span>
                     <div class="pull-right">
-                        <?if(!empty($tags)) foreach ($tags [$post ['post_id']] as $tag):?>
+                        <?if(!empty($tags)) foreach ($tags [$post['post_id']] as $tag):?>
                             <a href="#"><span class = "label" style="background-color: #5bc0de"><?=$tag?></span></a><?endforeach?>
                     </div>
                 </div>

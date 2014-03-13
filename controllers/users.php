@@ -25,7 +25,11 @@ class users extends Controller{
         if (!empty($this->params[0])) {
             $username = $this->params[0];
         }
-        $user_id = get_one("SELECT user_id FROM user NATURAL JOIN user WHERE username='$username'");
+        /*$user_id = get_one("SELECT user_id FROM user WHERE username='$username'");*/
+        /**$this->post = get_one("SELECT username, user_id FROM user WHERE username='$username'");**/
+        /*$this->post = get_one("SELECT user_id FROM user WHERE username='$username'");*/
+        /**$this->post = get_one("SELECT post_id, post_subject FROM post NATURAL JOIN user ON post.user_id = user.user_id WHERE post.user_id='$user_id'");**/
+
         /**
         $this->posts = get_all("SELECT * FROM post_tags NATURAL JOIN post, user WHERE user_id='$user_id'");
         $post_id = $this->params[0];
