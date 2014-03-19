@@ -14,8 +14,6 @@ SET time_zone = "+00:00";
 --
 -- Andmebaas: `blog`
 --
-CREATE DATABASE IF NOT EXISTS `blog` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `blog`;
 
 -- --------------------------------------------------------
 
