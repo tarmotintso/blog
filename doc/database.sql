@@ -1,38 +1,35 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 4.2.0-dev
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Loomise aeg: Märts 19, 2014 kell 08:05 AM
--- Serveri versioon: 5.5.32
--- PHP versioon: 5.4.19
+-- Host: localhost
+-- Generation Time: Mar 18, 2014 at 03:51 PM
+-- Server version: 5.5.34
+-- PHP Version: 5.4.22
 
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Andmebaas: `blog`
+-- Database: `blog`
 --
-CREATE DATABASE IF NOT EXISTS `blog` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `blog`;
 
 -- --------------------------------------------------------
 
 --
--- Tabeli struktuur tabelile `comment`
+-- Table structure for table `comment`
 --
 
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE IF NOT EXISTS `comment` (
-  `comment_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `comment_id` int(11) unsigned NOT NULL,
   `comment_text` text NOT NULL,
-  `comment_author` text NOT NULL,
-  PRIMARY KEY (`comment_id`)
+  `comment_author` text NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Andmete tõmmistamine tabelile `comment`
+-- Dumping data for table `comment`
 --
 
 INSERT INTO `comment` (`comment_id`, `comment_text`, `comment_author`) VALUES
@@ -42,22 +39,20 @@ INSERT INTO `comment` (`comment_id`, `comment_text`, `comment_author`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabeli struktuur tabelile `post`
+-- Table structure for table `post`
 --
 
 DROP TABLE IF EXISTS `post`;
 CREATE TABLE IF NOT EXISTS `post` (
-  `post_id` int(4) unsigned NOT NULL AUTO_INCREMENT,
+  `post_id` int(4) unsigned NOT NULL,
   `post_subject` varchar(255) DEFAULT NULL,
   `post_text` text,
   `post_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`post_id`),
-  KEY `user_id` (`user_id`)
+  `user_id` int(10) unsigned DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
--- Andmete tõmmistamine tabelile `post`
+-- Dumping data for table `post`
 --
 
 INSERT INTO `post` (`post_id`, `post_subject`, `post_text`, `post_created`, `user_id`) VALUES
@@ -68,19 +63,17 @@ INSERT INTO `post` (`post_id`, `post_subject`, `post_text`, `post_created`, `use
 -- --------------------------------------------------------
 
 --
--- Tabeli struktuur tabelile `post_comments`
+-- Table structure for table `post_comments`
 --
 
 DROP TABLE IF EXISTS `post_comments`;
 CREATE TABLE IF NOT EXISTS `post_comments` (
   `post_id` int(11) unsigned NOT NULL,
-  `comment_id` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`post_id`,`comment_id`),
-  KEY `comment_id` (`comment_id`)
+  `comment_id` int(11) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Andmete tõmmistamine tabelile `post_comments`
+-- Dumping data for table `post_comments`
 --
 
 INSERT INTO `post_comments` (`post_id`, `comment_id`) VALUES
@@ -90,19 +83,17 @@ INSERT INTO `post_comments` (`post_id`, `comment_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabeli struktuur tabelile `post_tags`
+-- Table structure for table `post_tags`
 --
 
 DROP TABLE IF EXISTS `post_tags`;
 CREATE TABLE IF NOT EXISTS `post_tags` (
   `post_id` int(11) unsigned NOT NULL,
-  `tag_id` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`post_id`,`tag_id`),
-  KEY `tag_id` (`tag_id`)
+  `tag_id` int(11) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Andmete tõmmistamine tabelile `post_tags`
+-- Dumping data for table `post_tags`
 --
 
 INSERT INTO `post_tags` (`post_id`, `tag_id`) VALUES
@@ -113,18 +104,17 @@ INSERT INTO `post_tags` (`post_id`, `tag_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabeli struktuur tabelile `tag`
+-- Table structure for table `tag`
 --
 
 DROP TABLE IF EXISTS `tag`;
 CREATE TABLE IF NOT EXISTS `tag` (
-  `tag_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `tag_name` varchar(25) NOT NULL,
-  PRIMARY KEY (`tag_id`)
+  `tag_id` int(10) unsigned NOT NULL,
+  `tag_name` varchar(25) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
--- Andmete tõmmistamine tabelile `tag`
+-- Dumping data for table `tag`
 --
 
 INSERT INTO `tag` (`tag_id`, `tag_name`) VALUES
@@ -136,20 +126,19 @@ INSERT INTO `tag` (`tag_id`, `tag_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabeli struktuur tabelile `user`
+-- Table structure for table `user`
 --
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
   `username` varchar(25) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `deleted` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`)
+  `deleted` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- Andmete tõmmistamine tabelile `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`user_id`, `username`, `password`, `deleted`) VALUES
@@ -158,26 +147,90 @@ INSERT INTO `user` (`user_id`, `username`, `password`, `deleted`) VALUES
 (3, 'uus kasutaja', 'miski', 0);
 
 --
--- Tõmmistatud tabelite piirangud
+-- Indexes for dumped tables
 --
 
 --
--- Piirangud tabelile `post`
+-- Indexes for table `comment`
+--
+ALTER TABLE `comment`
+ADD PRIMARY KEY (`comment_id`);
+
+--
+-- Indexes for table `post`
 --
 ALTER TABLE `post`
-  ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+ADD PRIMARY KEY (`post_id`), ADD KEY `user_id` (`user_id`);
 
 --
--- Piirangud tabelile `post_comments`
+-- Indexes for table `post_comments`
 --
 ALTER TABLE `post_comments`
-  ADD CONSTRAINT `post_comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`),
-  ADD CONSTRAINT `post_comments_ibfk_2` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`comment_id`);
+ADD PRIMARY KEY (`post_id`,`comment_id`), ADD KEY `comment_id` (`comment_id`);
 
 --
--- Piirangud tabelile `post_tags`
+-- Indexes for table `post_tags`
 --
 ALTER TABLE `post_tags`
-  ADD CONSTRAINT `post_tags_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`),
-  ADD CONSTRAINT `post_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`tag_id`);
+ADD PRIMARY KEY (`post_id`,`tag_id`), ADD KEY `tag_id` (`tag_id`);
+
+--
+-- Indexes for table `tag`
+--
+ALTER TABLE `tag`
+ADD PRIMARY KEY (`tag_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `comment`
+--
+ALTER TABLE `comment`
+MODIFY `comment_id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `post`
+--
+ALTER TABLE `post`
+MODIFY `post_id` int(4) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tag`
+--
+ALTER TABLE `tag`
+MODIFY `tag_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+MODIFY `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `post`
+--
+ALTER TABLE `post`
+ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+
+--
+-- Constraints for table `post_comments`
+--
+ALTER TABLE `post_comments`
+ADD CONSTRAINT `post_comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`),
+ADD CONSTRAINT `post_comments_ibfk_2` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`comment_id`);
+
+--
+-- Constraints for table `post_tags`
+--
+ALTER TABLE `post_tags`
+ADD CONSTRAINT `post_tags_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`),
+ADD CONSTRAINT `post_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`tag_id`);
 SET FOREIGN_KEY_CHECKS=1;
