@@ -3,17 +3,13 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Loomise aeg: Märts 19, 2014 kell 08:40 AM
+-- Loomise aeg: Märts 19, 2014 kell 09:02 AM
 -- Serveri versioon: 5.5.32
 -- PHP versioon: 5.4.19
 
-SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
---
--- Andmebaas: `blog`
---
 
 -- --------------------------------------------------------
 
@@ -55,6 +51,12 @@ CREATE TABLE IF NOT EXISTS `post` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
+-- RELATIONS FOR TABLE `post`:
+--   `user_id`
+--       `user` -> `user_id`
+--
+
+--
 -- Andmete tõmmistamine tabelile `post`
 --
 
@@ -77,6 +79,14 @@ CREATE TABLE IF NOT EXISTS `post_comments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- RELATIONS FOR TABLE `post_comments`:
+--   `post_id`
+--       `post` -> `post_id`
+--   `comment_id`
+--       `comment` -> `comment_id`
+--
+
+--
 -- Andmete tõmmistamine tabelile `post_comments`
 --
 
@@ -97,6 +107,14 @@ CREATE TABLE IF NOT EXISTS `post_tags` (
   PRIMARY KEY (`post_id`,`tag_id`),
   KEY `tag_id` (`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONS FOR TABLE `post_tags`:
+--   `post_id`
+--       `post` -> `post_id`
+--   `tag_id`
+--       `tag` -> `tag_id`
+--
 
 --
 -- Andmete tõmmistamine tabelile `post_tags`
@@ -175,4 +193,3 @@ ALTER TABLE `post_comments`
 ALTER TABLE `post_tags`
   ADD CONSTRAINT `post_tags_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`),
   ADD CONSTRAINT `post_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`tag_id`);
-SET FOREIGN_KEY_CHECKS=1;
