@@ -3,13 +3,19 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Loomise aeg: Märts 19, 2014 kell 09:02 AM
+-- Loomise aeg: Märts 20, 2014 kell 01:57 PM
 -- Serveri versioon: 5.5.32
 -- PHP versioon: 5.4.19
 
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
+--
+-- Andmebaas: `blog`
+--
+CREATE DATABASE IF NOT EXISTS `blog` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `blog`;
 
 -- --------------------------------------------------------
 
@@ -17,7 +23,6 @@ SET time_zone = "+00:00";
 -- Tabeli struktuur tabelile `comment`
 --
 
-DROP TABLE IF EXISTS `comment`;
 CREATE TABLE IF NOT EXISTS `comment` (
   `comment_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `comment_text` text NOT NULL,
@@ -39,7 +44,6 @@ INSERT INTO `comment` (`comment_id`, `comment_text`, `comment_author`) VALUES
 -- Tabeli struktuur tabelile `post`
 --
 
-DROP TABLE IF EXISTS `post`;
 CREATE TABLE IF NOT EXISTS `post` (
   `post_id` int(4) unsigned NOT NULL AUTO_INCREMENT,
   `post_subject` varchar(255) DEFAULT NULL,
@@ -48,13 +52,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   `user_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`post_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
-
---
--- RELATIONS FOR TABLE `post`:
---   `user_id`
---       `user` -> `user_id`
---
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Andmete tõmmistamine tabelile `post`
@@ -70,21 +68,12 @@ INSERT INTO `post` (`post_id`, `post_subject`, `post_text`, `post_created`, `use
 -- Tabeli struktuur tabelile `post_comments`
 --
 
-DROP TABLE IF EXISTS `post_comments`;
 CREATE TABLE IF NOT EXISTS `post_comments` (
   `post_id` int(11) unsigned NOT NULL,
   `comment_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`post_id`,`comment_id`),
   KEY `comment_id` (`comment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- RELATIONS FOR TABLE `post_comments`:
---   `post_id`
---       `post` -> `post_id`
---   `comment_id`
---       `comment` -> `comment_id`
---
 
 --
 -- Andmete tõmmistamine tabelile `post_comments`
@@ -100,7 +89,6 @@ INSERT INTO `post_comments` (`post_id`, `comment_id`) VALUES
 -- Tabeli struktuur tabelile `post_tags`
 --
 
-DROP TABLE IF EXISTS `post_tags`;
 CREATE TABLE IF NOT EXISTS `post_tags` (
   `post_id` int(11) unsigned NOT NULL,
   `tag_id` int(11) unsigned NOT NULL,
@@ -109,20 +97,15 @@ CREATE TABLE IF NOT EXISTS `post_tags` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELATIONS FOR TABLE `post_tags`:
---   `post_id`
---       `post` -> `post_id`
---   `tag_id`
---       `tag` -> `tag_id`
---
-
---
 -- Andmete tõmmistamine tabelile `post_tags`
 --
 
 INSERT INTO `post_tags` (`post_id`, `tag_id`) VALUES
 (3, 1),
-(4, 2);
+(4, 2),
+(4, 3),
+(3, 4),
+(4, 4);
 
 -- --------------------------------------------------------
 
@@ -130,7 +113,6 @@ INSERT INTO `post_tags` (`post_id`, `tag_id`) VALUES
 -- Tabeli struktuur tabelile `tag`
 --
 
-DROP TABLE IF EXISTS `tag`;
 CREATE TABLE IF NOT EXISTS `tag` (
   `tag_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `tag_name` varchar(25) NOT NULL,
@@ -144,6 +126,7 @@ CREATE TABLE IF NOT EXISTS `tag` (
 INSERT INTO `tag` (`tag_id`, `tag_name`) VALUES
 (1, 'kala'),
 (2, 'mutionu'),
+(3, 'rohi'),
 (4, 'karu');
 
 -- --------------------------------------------------------
@@ -152,7 +135,6 @@ INSERT INTO `tag` (`tag_id`, `tag_name`) VALUES
 -- Tabeli struktuur tabelile `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(25) NOT NULL,
@@ -193,3 +175,4 @@ ALTER TABLE `post_comments`
 ALTER TABLE `post_tags`
   ADD CONSTRAINT `post_tags_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`),
   ADD CONSTRAINT `post_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`tag_id`);
+SET FOREIGN_KEY_CHECKS=1;
